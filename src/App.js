@@ -1,16 +1,7 @@
 import React, { Component } from "react";
-import { RecommendationsBox } from "./components/recommendations";
+import RecommendationsContainer from "./RecommendationsContainer";
 import logo from "./carrot.jpg";
 import "./App.css";
-
-const recommendations = [
-  { id: 1, text: "Work hard, party harder" },
-  {
-    id: 2,
-    text: "Never stop learning",
-    comments: [{ id: 1, text: "A good comment" }, { id: 1, text: "Another comment here" }]
-  }
-];
 
 class App extends Component {
   render() {
@@ -20,7 +11,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">HOC & Render Props</h1>
         </header>
-        <RecommendationsBox recommendations={recommendations} />
+        <RecommendationsContainer />
       </div>
     );
   }
