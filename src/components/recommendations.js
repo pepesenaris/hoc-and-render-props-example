@@ -1,6 +1,7 @@
 import React from "react";
 import { withStateHandlers } from "recompose";
 import { CommentsBox } from "./comments";
+import TextForm from "./form";
 
 const withToggle = withStateHandlers(
   { open: false },
@@ -25,6 +26,7 @@ const RecommendationsBox = ({ recommendations = [] }) => {
       {recommendations.map(recommendation => (
         <Recommendation key={recommendation.id} recommendation={recommendation} />
       ))}
+      <TextForm onSubmit={console.log} />
     </div>
   );
 };
