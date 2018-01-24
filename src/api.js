@@ -1,9 +1,20 @@
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+const generateId = () => getRandomInt(0, 1000000);
+
 const recommendations = [
-  { id: 1, text: "Work hard, party harder" },
+  { id: generateId(), text: "Work hard, party harder" },
   {
-    id: 2,
+    id: generateId(),
     text: "Never stop learning",
-    comments: [{ id: 1, text: "A good comment" }, { id: 1, text: "Another comment here" }]
+    comments: [
+      { id: generateId(), text: "A good comment" },
+      { id: generateId(), text: "Another comment here" }
+    ]
   }
 ];
 
@@ -13,7 +24,12 @@ const delay = (time = 2000) =>
   });
 
 const api = {
-  getRecommendations: () => delay().then(() => recommendations)
+  getRecommendations: () => delay().then(() => recommendations),
+  createRecommendation: text =>
+    delay(1200).then(() => ({
+      text,
+      id: generateId()
+    }))
 };
 
 export default api;

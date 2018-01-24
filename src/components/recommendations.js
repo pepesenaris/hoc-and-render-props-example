@@ -23,13 +23,13 @@ const Recommendation = withToggle(({ recommendation, onToggle, open }) => {
   );
 });
 
-const RecommendationsBox = ({ recommendations = [] }) => {
+const RecommendationsBox = ({ recommendations = [], onCreateRecommendation }) => {
   return (
     <div className="Recommendation-Box-wrapper">
       {recommendations.map(recommendation => (
         <Recommendation key={recommendation.id} recommendation={recommendation} />
       ))}
-      <TextForm onSubmit={console.log} title="Add a recommendation" />
+      <TextForm title="Add a recommendation" onSubmit={onCreateRecommendation} />
     </div>
   );
 };

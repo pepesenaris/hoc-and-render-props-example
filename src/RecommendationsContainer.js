@@ -15,8 +15,18 @@ class RecommendationsContainer extends React.Component {
     });
   };
 
+  createRecommendation = text =>
+    api.createRecommendation(text).then(rec => {
+      this.setState(prevState => ({ list: [...prevState.list, rec] }));
+    });
+
   render() {
-    return <RecommendationsBox recommendations={this.state.list} />;
+    return (
+      <RecommendationsBox
+        recommendations={this.state.list}
+        onCreateRecommendation={this.createRecommendation}
+      />
+    );
   }
 }
 
