@@ -5,7 +5,11 @@ import "./App.css";
 
 const recommendations = [
   { id: 1, text: "Work hard, party harder" },
-  { id: 2, text: "Never stop learning", comments: [{ id: 1, text: "A good comment" }] }
+  {
+    id: 2,
+    text: "Never stop learning",
+    comments: [{ id: 1, text: "A good comment" }, { id: 1, text: "Another comment here" }]
+  }
 ];
 
 class App extends Component {

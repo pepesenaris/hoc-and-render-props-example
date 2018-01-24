@@ -31,3 +31,60 @@
     transform: rotate(360deg);
   }
 }
+
+.Recommendation-Box-wrapper {
+  width: 50%;
+  margin: auto;
+}
+
+.Recommendation-wrapper {
+  padding: 0.8rem 2rem;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #ccc;
+  text-align: left;
+}
+.Recommendation-text {
+  margin-right: 0.25rem;
+  font-size: 1.2rem;
+}
+.Recommendation-comment-toggle {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+  float: right;
+  font-size: 0.8rem;
+}
+
+.Comment-Box {
+  display: flex;
+  flex-direction: column;
+  border: 1px darkgray dashed;
+  padding: 0.8rem;
+}
+.Comment-wrapper {
+  font-size: 0.9rem;
+  margin: 1rem;
+  border-bottom: 1px dashed darkgray;
+  padding-bottom: 0.4rem;
+}
+
+.TextForm {
+  text-align: left;
+  margin: 0.8rem 0;
+}
+
+.TextForm > label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.TextForm > * {
+  display: block;
+  margin: 0.5rem;
+}
+
+.TextForm > textarea {
+  width: 30rem;
+}

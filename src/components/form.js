@@ -11,10 +11,11 @@ const enhance = compose(
   })
 );
 
-const TextForm = ({ text, onChange, handleSubmit }) => {
+const TextForm = ({ text, onChange, handleSubmit, title }) => {
   return (
     <form className="TextForm" onSubmit={handleSubmit}>
-      <input type="text" value={text} onChange={onChange} />
+      <label>{title}</label>
+      <textarea rows="3" value={text} onChange={onChange} />
       <input type="submit" value="Save" />
     </form>
   );

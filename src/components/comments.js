@@ -5,7 +5,11 @@ const Comment = ({ children }) => {
 };
 
 const CommentsBox = ({ comments = [] }) => {
-  return <div>{comments.map(comment => <Comment key={comment.id}>{comment.text}</Comment>)}</div>;
+  return (
+    <div className="Comment-Box">
+      {comments.map(comment => <Comment key={comment.id}>{comment.text}</Comment>)}
+    </div>
+  );
 };
 
 export { Comment, CommentsBox };

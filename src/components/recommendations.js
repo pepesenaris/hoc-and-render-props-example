@@ -11,10 +11,13 @@ const withToggle = withStateHandlers(
 const Recommendation = withToggle(({ recommendation, onToggle, open }) => {
   return (
     <div className="Recommendation-wrapper">
-      <span className="Recommendation-text">{recommendation.text}</span>
-      <span className="Recommendation-comment-toggle" onClick={onToggle}>
-        Comments
-      </span>
+      <p className="Recommendation-text">
+        {recommendation.text}{" "}
+        <span className="Recommendation-comment-toggle" onClick={onToggle}>
+          Comments
+        </span>
+      </p>
+
       {open && <CommentsBox comments={recommendation.comments} />}
     </div>
   );
@@ -26,7 +29,7 @@ const RecommendationsBox = ({ recommendations = [] }) => {
       {recommendations.map(recommendation => (
         <Recommendation key={recommendation.id} recommendation={recommendation} />
       ))}
-      <TextForm onSubmit={console.log} />
+      <TextForm onSubmit={console.log} title="Add a recommendation" />
     </div>
   );
 };
