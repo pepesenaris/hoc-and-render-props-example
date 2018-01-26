@@ -28,10 +28,15 @@ const CREATE_DELAY = 1200;
 const api = {
   getRecommendations: () => delay().then(() => recommendations),
   createRecommendation: text =>
-    delay(CREATE_DELAY).then(() => ({
-      text,
-      id: generateId()
-    })),
+    delay(CREATE_DELAY)
+      .then(() => ({
+        text,
+        id: generateId()
+      }))
+      .then(rec => {
+        recommendations = [...recommendations, rec];
+        return recommendations;
+      }),
   createComment: (recommendationId, text) =>
     delay(CREATE_DELAY)
       .then(() => recommendations.find(rec => rec.id === recommendationId))

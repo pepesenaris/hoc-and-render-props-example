@@ -9,21 +9,14 @@ class RecommendationsContainer extends React.Component {
     this.fetchRecommendations();
   }
 
-  fetchRecommendations = () => {
-    return api.getRecommendations().then(list => {
-      this.setState({ list });
-    });
-  };
+  setList = list => this.setState({ list });
 
-  createRecommendation = text =>
-    api.createRecommendation(text).then(rec => {
-      this.setState(prevState => ({ list: [...prevState.list, rec] }));
-    });
+  fetchRecommendations = () => api.getRecommendations().then(this.setList);
+
+  createRecommendation = text => api.createRecommendation(text).then(this.setList);
 
   createComment = (recommendationId, text) =>
-    api
-      .createComment(recommendationId, text)
-      .then(recommendations => this.setState({ list: recommendations }));
+    api.createComment(recommendationId, text).then(this.setList);
 
   render() {
     return (
