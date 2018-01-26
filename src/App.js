@@ -8,7 +8,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <a href="//ingenious.agency" target="_blank">
+            <img src={logo} className="App-logo" alt="logo" />
+          </a>
           <h1 className="App-title">HOC & Render Props</h1>
         </header>
         <RecommendationsContainer />
