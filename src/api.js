@@ -6,8 +6,8 @@ function getRandomInt(min, max) {
 
 const generateId = () => getRandomInt(0, 1000000);
 
-const recommendations = [
-  { id: generateId(), text: "Work hard, party harder" },
+let recommendations = [
+  { id: generateId(), text: "Work hard, party harder", comments: [] },
   {
     id: generateId(),
     text: "Never stop learning",
@@ -23,13 +23,32 @@ const delay = (time = 2000) =>
     setTimeout(resolve, time);
   });
 
+const CREATE_DELAY = 1200;
+
 const api = {
   getRecommendations: () => delay().then(() => recommendations),
   createRecommendation: text =>
-    delay(1200).then(() => ({
+    delay(CREATE_DELAY).then(() => ({
       text,
       id: generateId()
-    }))
+    })),
+  createComment: (recommendationId, text) =>
+    delay(CREATE_DELAY)
+      .then(() => recommendations.find(rec => rec.id === recommendationId))
+      .then(rec => ({
+        ...rec,
+        comments: [...rec.comments, { id: generateId(), text }]
+      }))
+      .then(recommendation => {
+        const index = recommendations.findIndex(rec => rec.id === recommendationId);
+        const updated = [
+          ...recommendations.slice(0, index),
+          recommendation,
+          ...recommendations.splice(index + 1)
+        ];
+        recommendations = updated;
+        return recommendations;
+      })
 };
 
 export default api;

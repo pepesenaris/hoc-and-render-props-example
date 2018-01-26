@@ -20,11 +20,17 @@ class RecommendationsContainer extends React.Component {
       this.setState(prevState => ({ list: [...prevState.list, rec] }));
     });
 
+  createComment = (recommendationId, text) =>
+    api
+      .createComment(recommendationId, text)
+      .then(recommendations => this.setState({ list: recommendations }));
+
   render() {
     return (
       <RecommendationsBox
         recommendations={this.state.list}
         onCreateRecommendation={this.createRecommendation}
+        onCreateComment={this.createComment}
       />
     );
   }

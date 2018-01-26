@@ -1,5 +1,5 @@
 import React from "react";
-import { withStateHandlers } from "recompose";
+import { withStateHandlers, withHandlers, compose } from "recompose";
 import { CommentsBox } from "./comments";
 import TextForm from "./form";
 
@@ -8,7 +8,14 @@ const withToggle = withStateHandlers(
   { onToggle: props => () => ({ open: !props.open }) }
 );
 
-const Recommendation = withToggle(({ recommendation, onToggle, open }) => {
+const withCommentHandlers = withHandlers({
+  handleCreateComment: ({ recommendation, onCreateComment }) => text =>
+    onCreateComment(recommendation.id, text)
+});
+
+const enhance = compose(withToggle, withCommentHandlers);
+
+const Recommendation = enhance(({ recommendation, onToggle, open, handleCreateComment }) => {
   return (
     <div className="Recommendation-wrapper">
       <p className="Recommendation-text">
@@ -18,16 +25,22 @@ const Recommendation = withToggle(({ recommendation, onToggle, open }) => {
         </span>
       </p>
 
-      {open && <CommentsBox comments={recommendation.comments} />}
+      {open && (
+        <CommentsBox comments={recommendation.comments} onCreateComment={handleCreateComment} />
+      )}
     </div>
   );
 });
 
-const RecommendationsBox = ({ recommendations = [], onCreateRecommendation }) => {
+const RecommendationsBox = ({ recommendations = [], onCreateRecommendation, onCreateComment }) => {
   return (
     <div className="Recommendation-Box-wrapper">
       {recommendations.map(recommendation => (
-        <Recommendation key={recommendation.id} recommendation={recommendation} />
+        <Recommendation
+          key={recommendation.id}
+          recommendation={recommendation}
+          onCreateComment={onCreateComment}
+        />
       ))}
       <TextForm title="Add a recommendation" onSubmit={onCreateRecommendation} />
     </div>
