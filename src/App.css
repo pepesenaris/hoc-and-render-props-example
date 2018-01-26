@@ -87,4 +87,13 @@
 
 .TextForm > textarea {
   width: 30rem;
+  padding: 0.5rem;
+}
+
+.TextForm > input[type="submit"] {
+  padding: 0.5rem 1.1rem;
+  font-size: 1.15rem;
+  border-radius: 0.15rem;
+  cursor: pointer;
+  margin-top: 1rem;
 }
