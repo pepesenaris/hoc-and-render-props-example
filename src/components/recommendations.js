@@ -1,4 +1,5 @@
 import React from "react";
+import editEntity from "./editEntity";
 import { withStateHandlers, withHandlers, compose } from "recompose";
 import { CommentsBox } from "./comments";
 import TextForm from "./form";
@@ -13,6 +14,8 @@ const withCommentHandlers = withHandlers({
     onCreateComment(recommendation.id, text)
 });
 
+const editOnlyRecentEntries = editEntity();
+
 const enhance = compose(withToggle, withCommentHandlers);
 
 const Recommendation = enhance(({ recommendation, onToggle, open, handleCreateComment }) => {
@@ -26,25 +29,31 @@ const Recommendation = enhance(({ recommendation, onToggle, open, handleCreateCo
       </p>
 
       {open && (
-        <CommentsBox comments={recommendation.comments} onCreateComment={handleCreateComment} />
+        <CommentsBox
+          list={recommendation.comments}
+          onCreateEntity={handleCreateComment}
+          onEditEntity={console.log}
+        />
       )}
     </div>
   );
 });
 
-const RecommendationsBox = ({ recommendations = [], onCreateRecommendation, onCreateComment }) => {
-  return (
-    <div className="Recommendation-Box-wrapper">
-      {recommendations.map(recommendation => (
-        <Recommendation
-          key={recommendation.id}
-          recommendation={recommendation}
-          onCreateComment={onCreateComment}
-        />
-      ))}
-      <TextForm title="Add a recommendation" onSubmit={onCreateRecommendation} />
-    </div>
-  );
-};
+const RecommendationsBox = editOnlyRecentEntries(
+  ({ list = [], handleEntitySave, onCreateComment }) => {
+    return (
+      <div className="Recommendation-Box-wrapper">
+        {list.map(recommendation => (
+          <Recommendation
+            key={recommendation.id}
+            recommendation={recommendation}
+            onCreateComment={onCreateComment}
+          />
+        ))}
+        <TextForm title="Add a recommendation" onSubmit={handleEntitySave} />
+      </div>
+    );
+  }
+);
 
 export { RecommendationsBox };

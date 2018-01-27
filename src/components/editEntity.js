@@ -1,5 +1,5 @@
 import moment from "moment";
-import { withStateHandlers, withHandlers } from "recompose";
+import { withStateHandlers, withHandlers, compose } from "recompose";
 
 const editRecentEntity = (interval = 10, intervalUnit = "minutes") =>
   compose(
@@ -19,7 +19,7 @@ const editRecentEntity = (interval = 10, intervalUnit = "minutes") =>
         const isRecentEntity = now.diff(createdAt, intervalUnit) <= interval;
         return isRecentEntity || (isEditing && entry.id === editingEntityId);
       },
-      handleEntrySave: ({
+      handleEntitySave: ({
         isEditing,
         editingEntityId,
         onCreateEntity,

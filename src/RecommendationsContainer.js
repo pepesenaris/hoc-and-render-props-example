@@ -21,8 +21,8 @@ class RecommendationsContainer extends React.Component {
   render() {
     return (
       <RecommendationsBox
-        recommendations={this.state.list}
-        onCreateRecommendation={this.createRecommendation}
+        list={this.state.list}
+        onCreateEntity={this.createRecommendation}
         onCreateComment={this.createComment}
       />
     );
