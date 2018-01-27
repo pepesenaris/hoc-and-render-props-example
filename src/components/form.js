@@ -2,10 +2,10 @@ import React from "react";
 import { compose, withStateHandlers, withHandlers } from "recompose";
 
 const enhance = compose(
-  withStateHandlers(
-    { text: "" },
-    { onChange: props => ev => ({ text: ev.target.value }), clear: () => () => ({ text: "" }) }
-  ),
+  withStateHandlers(({ initialText }) => ({ text: initialText || "" }), {
+    onChange: props => ev => ({ text: ev.target.value }),
+    clear: () => () => ({ text: "" })
+  }),
   withHandlers({
     handleSubmit: props => ev => {
       ev.preventDefault();
