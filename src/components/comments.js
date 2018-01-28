@@ -22,9 +22,9 @@ const CommentsBox = editOnlyRecentEntries(
     isSelectedForEditing,
     showEditButton,
     isEditing,
-    editingEntryId
+    editingEntityId
   }) => {
-    const selectedCommentForEdit = list && list.find(entry => entry.id === editingEntryId);
+    const selectedCommentForEdit = list && list.find(entry => entry.id === editingEntityId);
     const initialTextValue = isEditing ? selectedCommentForEdit && selectedCommentForEdit.text : "";
     return (
       <div className="Comment-Box">
