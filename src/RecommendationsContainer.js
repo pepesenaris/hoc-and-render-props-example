@@ -15,6 +15,9 @@ class RecommendationsContainer extends React.Component {
 
   createRecommendation = text => api.createRecommendation(this.state.list, text).then(this.setList);
 
+  editRecommendation = (recommendationId, text) =>
+    api.editRecommendation(this.state.list, recommendationId, text).then(this.setList);
+
   createComment = (recommendationId, text) =>
     api.createComment(this.state.list, recommendationId, text).then(this.setList);
 
@@ -26,6 +29,7 @@ class RecommendationsContainer extends React.Component {
       <RecommendationsBox
         list={this.state.list}
         onCreateEntity={this.createRecommendation}
+        onEditEntity={this.editRecommendation}
         onCreateComment={this.createComment}
         onEditComment={this.editComment}
       />

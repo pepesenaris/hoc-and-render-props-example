@@ -21,7 +21,17 @@ const editOnlyRecentEntries = editEntity();
 const enhance = compose(withToggle, withCommentHandlers);
 
 const Recommendation = enhance(
-  ({ recommendation, onToggle, open, handleCreateComment, handleEditComment }) => {
+  ({
+    recommendation,
+    onToggle,
+    open,
+    handleCreateComment,
+    handleEditComment,
+    isSelectedForEdit,
+    toggleEdit,
+    showEditButton
+  }) => {
+    const editAction = isSelectedForEdit ? "Create" : "Edit";
     return (
       <div className="Recommendation-wrapper">
         <p className="Recommendation-text">
@@ -29,6 +39,7 @@ const Recommendation = enhance(
           <span className="Recommendation-comment-toggle" onClick={onToggle}>
             Comments
           </span>
+          {showEditButton && <span onClick={toggleEdit}>{editAction}</span>}
         </p>
 
         {open && (
@@ -44,18 +55,34 @@ const Recommendation = enhance(
 );
 
 const RecommendationsBox = editOnlyRecentEntries(
-  ({ list = [], handleEntitySave, onCreateComment, onEditComment }) => {
+  ({
+    list = [],
+    handleEntitySave,
+    onCreateComment,
+    onEditComment,
+    toggleEditing,
+    isSelectedForEditing,
+    showEditButton,
+    isEditing,
+    editingEntityId
+  }) => {
+    const selectedForEdit = list && list.find(entry => entry.id === editingEntityId);
+    const initialTextValue = isEditing ? selectedForEdit && selectedForEdit.text : "";
+    const formTitle = `${selectedForEdit ? "Edit the" : "Add a"} recommendation`;
     return (
       <div className="Recommendation-Box-wrapper">
         {list.map(recommendation => (
           <Recommendation
             key={recommendation.id}
             recommendation={recommendation}
+            toggleEdit={() => toggleEditing(recommendation.id)}
+            showEditButton={showEditButton(recommendation)}
+            isSelectedForEdit={isSelectedForEditing(recommendation)}
             onCreateComment={onCreateComment}
             onEditComment={onEditComment}
           />
         ))}
-        <TextForm title="Add a recommendation" onSubmit={handleEntitySave} />
+        <TextForm title={formTitle} onSubmit={handleEntitySave} initialText={initialTextValue} />
       </div>
     );
   }

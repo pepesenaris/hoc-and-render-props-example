@@ -26,6 +26,7 @@ const CommentsBox = editOnlyRecentEntries(
   }) => {
     const selectedCommentForEdit = list && list.find(entry => entry.id === editingEntityId);
     const initialTextValue = isEditing ? selectedCommentForEdit && selectedCommentForEdit.text : "";
+    const commentFormTitle = `${selectedCommentForEdit ? "Edit the" : "Add a"} comment`;
     return (
       <div className="Comment-Box">
         {list.map(comment => (
@@ -39,7 +40,7 @@ const CommentsBox = editOnlyRecentEntries(
           </Comment>
         ))}
         <TextForm
-          title="Add a comment"
+          title={commentFormTitle}
           onSubmit={handleEntitySave}
           initialText={initialTextValue}
         />
