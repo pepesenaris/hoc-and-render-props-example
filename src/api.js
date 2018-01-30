@@ -40,6 +40,11 @@ const api = {
     delay()
       .then(() => newRecommendation(text))
       .then(rec => [...list, rec]),
+  editRecommendation: (list, recommendationId, text) =>
+    delay()
+      .then(findItem(list, recommendationId))
+      .then(rec => ({ ...rec, text }))
+      .then(updateList(list, recommendationId)),
   createComment: (list, recommendationId, text) =>
     delay()
       .then(findItem(list, recommendationId))
