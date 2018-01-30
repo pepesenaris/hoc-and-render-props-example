@@ -11,36 +11,40 @@ const withToggle = withStateHandlers(
 
 const withCommentHandlers = withHandlers({
   handleCreateComment: ({ recommendation, onCreateComment }) => text =>
-    onCreateComment(recommendation.id, text)
+    onCreateComment(recommendation.id, text),
+  handleEditComment: ({ recommendation, onEditComment }) => (commentId, text) =>
+    onEditComment(recommendation.id, commentId, text)
 });
 
 const editOnlyRecentEntries = editEntity();
 
 const enhance = compose(withToggle, withCommentHandlers);
 
-const Recommendation = enhance(({ recommendation, onToggle, open, handleCreateComment }) => {
-  return (
-    <div className="Recommendation-wrapper">
-      <p className="Recommendation-text">
-        {recommendation.text}{" "}
-        <span className="Recommendation-comment-toggle" onClick={onToggle}>
-          Comments
-        </span>
-      </p>
+const Recommendation = enhance(
+  ({ recommendation, onToggle, open, handleCreateComment, handleEditComment }) => {
+    return (
+      <div className="Recommendation-wrapper">
+        <p className="Recommendation-text">
+          {recommendation.text}{" "}
+          <span className="Recommendation-comment-toggle" onClick={onToggle}>
+            Comments
+          </span>
+        </p>
 
-      {open && (
-        <CommentsBox
-          list={recommendation.comments}
-          onCreateEntity={handleCreateComment}
-          onEditEntity={console.log}
-        />
-      )}
-    </div>
-  );
-});
+        {open && (
+          <CommentsBox
+            list={recommendation.comments}
+            onCreateEntity={handleCreateComment}
+            onEditEntity={handleEditComment}
+          />
+        )}
+      </div>
+    );
+  }
+);
 
 const RecommendationsBox = editOnlyRecentEntries(
-  ({ list = [], handleEntitySave, onCreateComment }) => {
+  ({ list = [], handleEntitySave, onCreateComment, onEditComment }) => {
     return (
       <div className="Recommendation-Box-wrapper">
         {list.map(recommendation => (
@@ -48,6 +52,7 @@ const RecommendationsBox = editOnlyRecentEntries(
             key={recommendation.id}
             recommendation={recommendation}
             onCreateComment={onCreateComment}
+            onEditComment={onEditComment}
           />
         ))}
         <TextForm title="Add a recommendation" onSubmit={handleEntitySave} />

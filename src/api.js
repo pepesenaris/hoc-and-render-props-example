@@ -3,7 +3,7 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
-const delay = (time = 2000) =>
+const delay = (time = 1200) =>
   new Promise((resolve, reject) => {
     setTimeout(resolve, time);
   });
@@ -19,7 +19,7 @@ const newRecommendation = (text, comments = []) => ({
 
 const newComment = text => ({ text, id: generateId(), created_at: Date.now() });
 
-let recommendations = [
+const INITIAL_RECOMMENDATIONS = [
   newRecommendation("Work hard, party harder"),
   newRecommendation("Never stop learning", [
     newComment("A good comment"),
@@ -27,31 +27,36 @@ let recommendations = [
   ])
 ];
 
-const CREATE_DELAY = 1200;
+const updateList = (list, entityId) => updated => {
+  const index = list.findIndex(item => item.id === entityId);
+  return [...list.slice(0, index), updated, ...list.splice(index + 1)];
+};
+
+const findItem = (list, id) => () => list.find(item => item.id === id);
 
 const api = {
-  getRecommendations: () => delay().then(() => recommendations),
-  createRecommendation: text =>
-    delay(CREATE_DELAY)
+  getRecommendations: () => delay().then(() => INITIAL_RECOMMENDATIONS),
+  createRecommendation: (list, text) =>
+    delay()
       .then(() => newRecommendation(text))
-      .then(rec => {
-        recommendations = [...recommendations, rec];
-        return recommendations;
-      }),
-  createComment: (recommendationId, text) =>
-    delay(CREATE_DELAY)
-      .then(() => recommendations.find(rec => rec.id === recommendationId))
+      .then(rec => [...list, rec]),
+  createComment: (list, recommendationId, text) =>
+    delay()
+      .then(findItem(list, recommendationId))
       .then(rec => ({ ...rec, comments: [...rec.comments, newComment(text)] }))
-      .then(recommendation => {
-        const index = recommendations.findIndex(rec => rec.id === recommendationId);
-        const updated = [
-          ...recommendations.slice(0, index),
-          recommendation,
-          ...recommendations.splice(index + 1)
-        ];
-        recommendations = updated;
-        return recommendations;
-      })
+      .then(updateList(list, recommendationId)),
+  editComment: (list, recommendationId, commentId, text) =>
+    delay()
+      .then(findItem(list, recommendationId))
+      .then(recommendation => ({
+        recommendation,
+        comment: findItem(recommendation.comments, commentId)()
+      }))
+      .then(({ recommendation, comment }) => ({
+        ...recommendation,
+        comments: updateList(recommendation.comments, comment.id)({ ...comment, text })
+      }))
+      .then(updateList(list, recommendationId))
 };
 
 export default api;

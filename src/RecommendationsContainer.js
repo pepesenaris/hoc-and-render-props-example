@@ -13,10 +13,13 @@ class RecommendationsContainer extends React.Component {
 
   fetchRecommendations = () => api.getRecommendations().then(this.setList);
 
-  createRecommendation = text => api.createRecommendation(text).then(this.setList);
+  createRecommendation = text => api.createRecommendation(this.state.list, text).then(this.setList);
 
   createComment = (recommendationId, text) =>
-    api.createComment(recommendationId, text).then(this.setList);
+    api.createComment(this.state.list, recommendationId, text).then(this.setList);
+
+  editComment = (recommendationId, commentId, text) =>
+    api.editComment(this.state.list, recommendationId, commentId, text).then(this.setList);
 
   render() {
     return (
@@ -24,6 +27,7 @@ class RecommendationsContainer extends React.Component {
         list={this.state.list}
         onCreateEntity={this.createRecommendation}
         onCreateComment={this.createComment}
+        onEditComment={this.editComment}
       />
     );
   }
