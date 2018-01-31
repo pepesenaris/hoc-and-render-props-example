@@ -40,7 +40,7 @@ const updateList = (list, entityId) => updated => {
 const findItem = (list, id) => () => list.find(item => item.id === id);
 
 const api = {
-  getRecommendations: () => delay().then(() => INITIAL_RECOMMENDATIONS),
+  getRecommendations: () => delay(3000).then(() => INITIAL_RECOMMENDATIONS),
   createRecommendation: (list, text) =>
     delay()
       .then(() => newRecommendation(text))

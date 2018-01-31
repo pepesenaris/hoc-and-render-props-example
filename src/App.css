@@ -99,3 +99,9 @@
   cursor: pointer;
   margin-top: 1rem;
 }
+
+.loading {
+  padding: 1.5rem 1.5rem;
+  margin: auto;
+  font-style: italic;
+}

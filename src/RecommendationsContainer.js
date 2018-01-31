@@ -26,6 +26,7 @@ class RecommendationsContainer extends React.Component {
     api.editComment(this.state.list, recommendationId, commentId, text).then(this.setList);
 
   render() {
+    const loading = this.state.list.length === 0;
     return (
       <article>
         <RecommendationsBox
@@ -35,13 +36,17 @@ class RecommendationsContainer extends React.Component {
           onCreateComment={this.createComment}
           onEditComment={this.editComment}
         >
-          {(formTitle, initialTextValue, handleEntitySave) => (
-            <TextForm
-              title={formTitle}
-              onSubmit={handleEntitySave}
-              initialText={initialTextValue}
-            />
-          )}
+          {(formTitle, initialTextValue, handleEntitySave) =>
+            loading ? (
+              <p className="loading">Loading active recommendations...</p>
+            ) : (
+              <TextForm
+                title={formTitle}
+                onSubmit={handleEntitySave}
+                initialText={initialTextValue}
+              />
+            )
+          }
         </RecommendationsBox>
         <RecommendationsBox list={archived} archived />
       </article>
