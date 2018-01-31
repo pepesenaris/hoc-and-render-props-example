@@ -6,8 +6,14 @@ const Comment = ({ children, showEditButton, isSelectedForEdit, toggleEdit }) =>
   const editAction = isSelectedForEdit ? "Create" : "Edit";
   return (
     <div className="Comment-wrapper">
-      <p>{children}</p>
-      {showEditButton && <span onClick={toggleEdit}>{editAction}</span>}
+      <p>
+        {children}
+        {showEditButton && (
+          <span onClick={toggleEdit} className="Comment-action">
+            {editAction}
+          </span>
+        )}
+      </p>
     </div>
   );
 };

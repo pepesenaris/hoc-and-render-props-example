@@ -49,12 +49,14 @@
   margin-right: 0.25rem;
   font-size: 1.2rem;
 }
-.Recommendation-comment-toggle {
+.Recommendation-action,
+.Comment-action {
   cursor: pointer;
   text-decoration: underline;
   color: blue;
   float: right;
   font-size: 0.8rem;
+  margin: 0 0.4rem;
 }
 
 .Comment-Box {

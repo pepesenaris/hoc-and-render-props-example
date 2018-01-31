@@ -36,10 +36,14 @@ const Recommendation = enhance(
       <div className="Recommendation-wrapper">
         <p className="Recommendation-text">
           {recommendation.text}{" "}
-          <span className="Recommendation-comment-toggle" onClick={onToggle}>
+          <span className="Recommendation-action" onClick={onToggle}>
             Comments
           </span>
-          {showEditButton && <span onClick={toggleEdit}>{editAction}</span>}
+          {showEditButton && (
+            <span onClick={toggleEdit} className="Recommendation-action">
+              {editAction}
+            </span>
+          )}
         </p>
 
         {open && (
