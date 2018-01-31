@@ -1,6 +1,7 @@
 import React from "react";
 import TextForm from "./form";
 import editEntity from "./editEntity";
+import { archived } from "../api";
 
 const Comment = ({ children, showEditButton, isSelectedForEdit, toggleEdit }) => {
   const editAction = isSelectedForEdit ? "Create" : "Edit";
@@ -28,7 +29,8 @@ const CommentsBox = editOnlyRecentEntries(
     isSelectedForEditing,
     showEditButton,
     isEditing,
-    editingEntityId
+    editingEntityId,
+    archived
   }) => {
     const selectedCommentForEdit = list && list.find(entry => entry.id === editingEntityId);
     const initialTextValue = isEditing ? selectedCommentForEdit && selectedCommentForEdit.text : "";
@@ -39,17 +41,19 @@ const CommentsBox = editOnlyRecentEntries(
           <Comment
             key={comment.id}
             toggleEdit={() => toggleEditing(comment.id)}
-            showEditButton={showEditButton(comment)}
+            showEditButton={!archived && showEditButton(comment)}
             isSelectedForEdit={isSelectedForEditing(comment)}
           >
             {comment.text}
           </Comment>
         ))}
-        <TextForm
-          title={commentFormTitle}
-          onSubmit={handleEntitySave}
-          initialText={initialTextValue}
-        />
+        {!archived && (
+          <TextForm
+            title={commentFormTitle}
+            onSubmit={handleEntitySave}
+            initialText={initialTextValue}
+          />
+        )}
       </div>
     );
   }

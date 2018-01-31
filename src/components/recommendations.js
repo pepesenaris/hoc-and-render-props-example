@@ -3,6 +3,7 @@ import editEntity from "./editEntity";
 import { withStateHandlers, withHandlers, compose } from "recompose";
 import { CommentsBox } from "./comments";
 import TextForm from "./form";
+import { archived } from "../api";
 
 const withToggle = withStateHandlers(
   { open: false },
@@ -29,7 +30,8 @@ const Recommendation = enhance(
     handleEditComment,
     isSelectedForEdit,
     toggleEdit,
-    showEditButton
+    showEditButton,
+    archived
   }) => {
     const editAction = isSelectedForEdit ? "Create" : "Edit";
     const toggleCommentsText = `Comments - ${open ? "Hide" : "Show"}`;
@@ -52,6 +54,7 @@ const Recommendation = enhance(
             list={recommendation.comments}
             onCreateEntity={handleCreateComment}
             onEditEntity={handleEditComment}
+            archived={archived}
           />
         )}
       </div>
@@ -69,7 +72,8 @@ const RecommendationsBox = editOnlyRecentEntries(
     isSelectedForEditing,
     showEditButton,
     isEditing,
-    editingEntityId
+    editingEntityId,
+    archived
   }) => {
     const selectedForEdit = list && list.find(entry => entry.id === editingEntityId);
     const initialTextValue = isEditing ? selectedForEdit && selectedForEdit.text : "";
@@ -81,10 +85,11 @@ const RecommendationsBox = editOnlyRecentEntries(
             key={recommendation.id}
             recommendation={recommendation}
             toggleEdit={() => toggleEditing(recommendation.id)}
-            showEditButton={showEditButton(recommendation)}
+            showEditButton={!archived && showEditButton(recommendation)}
             isSelectedForEdit={isSelectedForEditing(recommendation)}
             onCreateComment={onCreateComment}
             onEditComment={onEditComment}
+            archived={archived}
           />
         ))}
         <TextForm title={formTitle} onSubmit={handleEntitySave} initialText={initialTextValue} />
@@ -92,5 +97,12 @@ const RecommendationsBox = editOnlyRecentEntries(
     );
   }
 );
+
+RecommendationsBox.defaultProps = {
+  onCreateComment: console.log,
+  onEditComment: console.log,
+  onCreateEntity: console.log,
+  onEditEntity: console.log
+};
 
 export { RecommendationsBox };

@@ -1,5 +1,5 @@
 import React from "react";
-import api from "./api";
+import api, { archived } from "./api";
 import { RecommendationsBox } from "./components/recommendations";
 
 class RecommendationsContainer extends React.Component {
@@ -26,13 +26,16 @@ class RecommendationsContainer extends React.Component {
 
   render() {
     return (
-      <RecommendationsBox
-        list={this.state.list}
-        onCreateEntity={this.createRecommendation}
-        onEditEntity={this.editRecommendation}
-        onCreateComment={this.createComment}
-        onEditComment={this.editComment}
-      />
+      <article>
+        <RecommendationsBox
+          list={this.state.list}
+          onCreateEntity={this.createRecommendation}
+          onEditEntity={this.editRecommendation}
+          onCreateComment={this.createComment}
+          onEditComment={this.editComment}
+        />
+        <RecommendationsBox list={archived} archived />
+      </article>
     );
   }
 }

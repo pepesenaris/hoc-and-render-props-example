@@ -27,6 +27,11 @@ const INITIAL_RECOMMENDATIONS = [
   ])
 ];
 
+export const archived = [
+  newRecommendation("Hasta la vista Baby"),
+  newRecommendation("Run Forest Run", [newComment("And he did so")])
+];
+
 const updateList = (list, entityId) => updated => {
   const index = list.findIndex(item => item.id === entityId);
   return [...list.slice(0, index), updated, ...list.splice(index + 1)];
