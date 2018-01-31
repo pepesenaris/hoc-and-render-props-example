@@ -73,7 +73,8 @@ const RecommendationsBox = editOnlyRecentEntries(
     showEditButton,
     isEditing,
     editingEntityId,
-    archived
+    archived,
+    children
   }) => {
     const selectedForEdit = list && list.find(entry => entry.id === editingEntityId);
     const initialTextValue = isEditing ? selectedForEdit && selectedForEdit.text : "";
@@ -92,7 +93,7 @@ const RecommendationsBox = editOnlyRecentEntries(
             archived={archived}
           />
         ))}
-        <TextForm title={formTitle} onSubmit={handleEntitySave} initialText={initialTextValue} />
+        {children && children(formTitle, initialTextValue, handleEntitySave)}
       </div>
     );
   }

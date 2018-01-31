@@ -1,6 +1,7 @@
 import React from "react";
 import api, { archived } from "./api";
 import { RecommendationsBox } from "./components/recommendations";
+import TextForm from "./components/form";
 
 class RecommendationsContainer extends React.Component {
   state = { list: [] };
@@ -33,7 +34,15 @@ class RecommendationsContainer extends React.Component {
           onEditEntity={this.editRecommendation}
           onCreateComment={this.createComment}
           onEditComment={this.editComment}
-        />
+        >
+          {(formTitle, initialTextValue, handleEntitySave) => (
+            <TextForm
+              title={formTitle}
+              onSubmit={handleEntitySave}
+              initialText={initialTextValue}
+            />
+          )}
+        </RecommendationsBox>
         <RecommendationsBox list={archived} archived />
       </article>
     );
