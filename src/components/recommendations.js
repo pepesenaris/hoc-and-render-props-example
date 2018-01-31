@@ -32,12 +32,13 @@ const Recommendation = enhance(
     showEditButton
   }) => {
     const editAction = isSelectedForEdit ? "Create" : "Edit";
+    const toggleCommentsText = `Comments - ${open ? "Hide" : "Show"}`;
     return (
       <div className="Recommendation-wrapper">
         <p className="Recommendation-text">
           {recommendation.text}{" "}
           <span className="Recommendation-action" onClick={onToggle}>
-            Comments
+            {toggleCommentsText}
           </span>
           {showEditButton && (
             <span onClick={toggleEdit} className="Recommendation-action">
